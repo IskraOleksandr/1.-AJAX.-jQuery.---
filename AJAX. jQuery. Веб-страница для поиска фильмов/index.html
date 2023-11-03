@@ -5,11 +5,39 @@
     <meta charset="utf-8" />
     <title>TypeScript HTML App</title>
     <link rel="stylesheet" href="app.css" type="text/css" />
+    <link rel="stylesheet" href="Scripts/Style.css" type="text/css" />
+    <script src="Scripts/jquery-3.7.0.min.js"></script>
     <script src="app.js"></script>
 </head>
 <body>
-    <h1>TypeScript HTML App</h1>
+    <div>
+        <div id="dvn">
+            <h2 class="h2l" id="Search">Movie Search</h2>
+            <div class="div1">
+                <label class="label">Title:</label>
+                <input type="text" class="input1" placeholder="Movie title" id="title">
+            </div>
+            <br>
+            <div class="div1">
+                <label class="label">Type:</label>
+                <select class="input2" id="type">
+                    <option value="movie">Movie</option>
+                    <option value="series">Series</option>
+                    <option value="episode">Episode</option>
+                </select>
+            </div>
+            <br>
+            <div class="div2">
+                <button class="input_subm" id="bt1">Search</button>
+            </div>
+        </div>
+    </div>
 
-    <div id="content"></div>
+    <div class="div3n" id="mov_div"> </div>
+
+    <div> <div id="div_5" style="width: max-content;"> </div> </div><br /><br />
+
+    <div id="dv1n"> </div>
+    <br />
 </body>
 </html>

@@ -1,34 +1,31 @@
 /// <reference path="Scripts/typings/jquery/jquery.d.ts" />
-
 window.onload = () => {
-    let api_key: string = "apikey=9e810dd3";
-    let current_page: number = 1; // Текущая страница
-    let max_pages: number = 0;
+    let api_key = "apikey=9e810dd3";
+    let current_page = 1; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    let max_pages = 0;
     function Href(page, title, type, flag) {
         return flag === true ? `http://www.omdbapi.com/?${api_key}&s=${title}&type=${type}&page=${page}` :
             `http://www.omdbapi.com/?${api_key}&i=${title}&plot=full`;
     }
-
     function Page(max_page) {
         return !Number.isInteger(max_page / 10) ? (Math.trunc(max_page / 10) + 1) : max_page / 10;
     }
-
-    function RemoveChildren(elem: string) {
+    function RemoveChildren(elem) {
         $(elem).children().remove();
     }
-
-    function RenderPage(page) {// Функция для получения данных с сервера и отображения их на странице
-
+    function RenderPage(page) {
         $.get(Href(page, $("#title").val(), $("#type option:selected").val(), true), function (data) {
             RemoveChildren("#mov_div");
             max_pages = Page(data.totalResults);
             console.log("totres" + data.totalResults);
-
             if (data.Error != "Movie not found!") {
-                for (let i = 0; i < data.Search.length; i++) { $('#mov_div').append(row(data, i)); }
+                for (let i = 0; i < data.Search.length; i++) {
+                    $('#mov_div').append(row(data, i));
+                }
             }
-            else { $('#mov_div').append('<div id="div_nf">Movie not found!</div>'); }
-
+            else {
+                $('#mov_div').append('<div id="div_nf">Movie not found!</div>');
+            }
             $('.a_bt').on('click', function () {
                 RemoveChildren("#dv1n");
                 $.ajax({
@@ -39,48 +36,37 @@ window.onload = () => {
             });
         });
     }
-
-
-
-    function RenderPagination(parent, ip, pages, current) {// Рендер пагинации, pages, current 
+    function RenderPagination(parent, ip, pages, current) {
         RemoveChildren("#div_5");
-
-        for (let i = ip; i < pages; i++) {// Создаём "ссылки" на страницы i будет своеобразным идентификатором (ID)
+        for (let i = ip; i < pages; i++) { // пїЅпїЅпїЅпїЅпїЅпїЅ "пїЅпїЅпїЅпїЅпїЅпїЅ" пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ i пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (ID)
             let item = $('<span></span>');
             item.addClass('link');
-
             if (i === current)
-                item.addClass('active');// Если ID равен текущей странице, то выделяем ссылку 
-
+                item.addClass('active'); // пїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 
             item.attr("data-page", i);
-            item.text(i);// Выводим номер страницы
-
+            item.text(i); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             parent.append(item);
         }
     }
-
     $('#bt1').on('click', function () {
         current_page = 1;
-        RenderPage(current_page); // Загружаем данные для текущей страницы
+        RenderPage(current_page); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         RenderPagination($('#div_5'), 1, 3 + 1, current_page);
-
         $('#div_5').on('click', function (e) {
-            let target = (e.target as HTMLElement).closest('.link');
+            let target = e.target.closest('.link');
             if (target) {
-                let page: number = + target.getAttribute('data-page'); // Получаем ID новой страницы 
-                current_page = page; // Перезаписываем значение текущей страницы
-                let left_num: number = page - 1, right_num: number = page + 2;
-
+                let page = +target.getAttribute('data-page'); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ID пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
+                current_page = page; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                let left_num = page - 1, right_num = page + 2;
                 if (page == max_pages) {
                     right_num = page + 1;
                     left_num = page - 2;
                 }
-
                 if (left_num == 0) {
                     left_num = 1;
                     right_num = 4;
                 }
-                RenderPage(current_page);// И делаем перерендер 
+                RenderPage(current_page); // пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 
                 RenderPagination($('#div_5'), left_num, right_num, current_page);
             }
         });
@@ -90,9 +76,7 @@ window.onload = () => {
             data.Search[i].Title + '</h2><p class="p1"> Year: ' + data.Search[i].Year + ' </p>' +
             '<button class="a_bt" value="' + data.Search[i].imdbID + '" > Details </button></div></div>';
     };
-
     let film_info = function (data) {
-
         return '<div class="div2_n"><br/><h3 class="h3" >' + data.Title + '</h3>' +
             '<div class= "div3_n"><img class="img2" src="' + data.Poster + '" width = "300" />' +
             '<h2 class="h2 shadow" > Genre: <p class="p2" > ' + data.Genre + ' </p></h2>' +
@@ -103,4 +87,5 @@ window.onload = () => {
             '<h2 class="h2 shadow" > Runtime: <p class="p3_n p3" > ' + data.Runtime + ' </p></h2>' +
             '<p class="shadow p4" > ' + data.Plot + ' </p></div><br/></div>';
     };
-}
+};
+//# sourceMappingURL=app.js.map
