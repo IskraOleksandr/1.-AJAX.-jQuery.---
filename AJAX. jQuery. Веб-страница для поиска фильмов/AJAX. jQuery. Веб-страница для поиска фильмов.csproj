@@ -82,6 +82,7 @@
   <ItemGroup>
     <Content Include="app.css" />
     <Content Include="index.html" />
+    <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\Style.css" />
     <Content Include="Web.config" />
   </ItemGroup>
